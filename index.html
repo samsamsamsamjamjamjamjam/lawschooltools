@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Law School Tools</title>
+<style>
+  :root {
+    --bg: #f6faf7;
+    --surface: #ffffff;
+    --ink: #0a3d28;
+    --ink-soft: #4a6b5c;
+    --accent: #008350;
+    --accent-dark: #00633c;
+    --accent-soft: #e3f4ec;
+    --border: #cfe3d8;
+    --success: #008350;
+    --shadow: 0 1px 2px rgba(0,131,80,0.08), 0 4px 12px rgba(0,131,80,0.06);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  a { color: var(--accent); }
+
+  /* ---------- HERO ---------- */
+  header.hero {
+    background: linear-gradient(180deg, #ffffff 0%, #e3f4ec 100%);
+    border-bottom: 3px solid var(--accent);
+    padding: 56px 24px 40px;
+    text-align: center;
+  }
+  header.hero h1 {
+    font-size: 44px;
+    margin: 0 0 12px;
+    letter-spacing: -0.5px;
+    color: var(--accent);
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+  header.hero p.tag {
+    font-size: 19px;
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin: 0 auto 24px;
+  }
+  nav.toolbar {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center; margin-top: 8px;
+  }
+  nav.toolbar a {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 12px 20px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+    box-shadow: var(--shadow);
+    transition: all 0.15s ease;
+  }
+  nav.toolbar a:hover, nav.toolbar a:focus {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+    outline: none;
+  }
+
+  main { max-width: 920px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  section.tool {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+  }
+  section.tool h2 {
+    margin: 0 0 6px;
+    font-size: 26px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  section.tool h2 .num {
+    background: var(--accent);
+    color: white;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 17px; font-weight: 700;
+  }
+  section.tool p.what {
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+    font-size: 16px;
+  }
+  details.howto {
+    background: var(--accent-soft);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    border: 1px solid var(--border);
+  }
+  details.howto summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  details.howto ol { margin: 10px 0 4px 18px; padding: 0; }
+  details.howto li { margin-bottom: 4px; }
+
+  label.field {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  textarea, input[type="text"], input[type="number"], select {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 16px;
+    font-family: inherit;
+    background: #fff;
+    color: var(--ink);
+    transition: border-color 0.15s;
+  }
+  textarea:focus, input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  textarea { min-height: 160px; resize: vertical; }
+
+  button {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 22px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.05s, background 0.15s;
+    margin: 6px 6px 6px 0;
+  }
+  button:hover { background: var(--accent-dark); }
+  button:active { transform: translateY(1px); }
+  button:disabled { background: #b9cfc3; cursor: not-allowed; }
+  button.secondary { background: white; color: var(--accent); border: 1.5px solid var(--accent); }
+  button.secondary:hover { background: var(--accent-soft); }
+  button.ghost { background: transparent; color: var(--ink-soft); border: 1.5px solid var(--border); }
+  button.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .checks {
+    display: flex; flex-direction: column; gap: 10px;
+    margin: 14px 0 18px;
+    padding: 14px;
+    background: var(--accent-soft);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .checks label {
+    display: flex; align-items: center; gap: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .checks input[type="checkbox"], .checks input[type="radio"] {
+    width: 22px; height: 22px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .file-row {
+    display: flex; align-items: center; gap: 10px;
+    flex-wrap: wrap;
+    margin: 8px 0 14px;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .file-row input[type="file"] {
+    font-size: 14px;
+  }
+
+  /* ---------- QUIZ STAGE ---------- */
+  .quiz-stage {
+    margin-top: 18px;
+    padding: 22px;
+    background: var(--accent-soft);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    display: none;
+  }
+  .quiz-stage.show { display: block; }
+  .quiz-counter {
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 8px;
+  }
+  .quiz-question {
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0 0 16px;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .quiz-choices { list-style: none; padding: 0; margin: 0 0 14px; }
+  .quiz-choices li {
+    padding: 10px 14px;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.1s;
+  }
+  .quiz-choices li:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .quiz-choices li.correct { background: var(--accent-soft); border-color: var(--success); color: var(--accent-dark); font-weight: 600; }
+  .quiz-choices li.wrong { background: #fdeaea; border-color: #c93c3c; }
+  .quiz-answer {
+    background: #ffffff;
+    border: 1.5px solid var(--success);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    display: none;
+  }
+  .quiz-answer.show { display: block; }
+  .quiz-answer strong { color: var(--success); }
+
+  /* ---------- HANDOUT ---------- */
+  #handout-output {
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    display: none;
+  }
+  #handout-output.show { display: block; }
+  #handout-output h3 {
+    margin-top: 0;
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent-soft);
+    padding-bottom: 6px;
+  }
+  .output-actions { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .status-msg {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .status-msg.show { display: block; }
+  .status-msg.success { background: var(--accent-soft); color: var(--accent-dark); border: 1px solid var(--border); }
+  .status-msg.error { background: #fdeaea; color: #a01818; border: 1px solid #f3c8c8; }
+
+  footer {
+    text-align: center;
+    padding: 30px 20px 100px;
+    color: var(--ink-soft);
+    font-size: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ---------- INLINE QUIZ MUSIC ---------- */
+  .quiz-music {
+    margin: 16px 0 8px;
+    padding: 14px 16px;
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .quiz-music-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .quiz-music-title {
+    font-weight: 600;
+    color: var(--accent-dark);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+  }
+  .quiz-music-title .playing-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .quiz-music.playing .quiz-music-title .playing-dot {
+    opacity: 1;
+    animation: qm-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes qm-pulse { 0%,100% { opacity: 0.35; } 50% { opacity: 1; } }
+  .quiz-music button.mp-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 0;
+  }
+  .quiz-music button.mp-btn:hover { background: var(--accent-dark); }
+  .quiz-music .mode-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .quiz-music .mode-options label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 13px;
+    background: white;
+    transition: all 0.1s;
+  }
+  .quiz-music .mode-options label:hover {
+    border-color: var(--accent);
+    color: var(--accent-dark);
+  }
+  .quiz-music .mode-options input[type="radio"] {
+    width: 16px; height: 16px;
+    accent-color: var(--accent);
+    margin: 0;
+  }
+  .quiz-music .volume-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .quiz-music input[type="range"] {
+    flex: 1;
+    accent-color: var(--accent);
+  }
+  .quiz-music .music-note {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+    font-style: italic;
+  }
+
+    @media print {
+    header.hero, nav.toolbar, section.tool:not(#handout-section), footer, .output-actions, details.howto { display: none !important; }
+    body { background: white; }
+    #handout-output { border: none; background: white; padding: 0; }
+  }
+  @media (max-width: 600px) {
+    header.hero h1 { font-size: 32px; }
+    main { padding: 20px 14px 60px; }
+    section.tool { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>Law School Tools</h1>
+  <p class="tag">A simple, friendly toolkit for studying smarter. Built for real humans — no tech skills required.</p>
+  <nav class="toolbar" aria-label="Jump to a tool">
+    <a href="#ppt">🎞️ PPT Generator</a>
+    <a href="#quiz">❓ Quiz Me</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============ TOOL 1: PPT GENERATOR ============ -->
+  <section class="tool" id="ppt">
+    <h2>PowerPoint Generator</h2>
+    <p class="what">Paste your notes (or upload a .txt file). We'll turn them into a clean academic PowerPoint — one concept per slide. Add a printable handout if you want one.</p>
+
+    <details class="howto">
+      <summary>How to use this (click to open)</summary>
+      <ol>
+        <li>Paste your notes in the box below, or click <strong>Choose File</strong> to upload a .txt file.</li>
+        <li>Check <strong>Include handout</strong> if you also want a one-page summary you can print.</li>
+        <li>Click <strong>Generate PowerPoint</strong>. Your computer will download a .pptx file you can open in PowerPoint, Google Slides, or Keynote.</li>
+      </ol>
+    </details>
+
+    <label class="field" for="ppt-notes">Your notes</label>
+    <textarea id="ppt-notes" placeholder="Example: Personal jurisdiction requires minimum contacts with the forum state. The Erie doctrine means federal courts apply state substantive law in diversity cases. Consideration is a bargained-for exchange of legal value."></textarea>
+    <div class="file-row">
+      <span>Or upload a .txt file:</span>
+      <input type="file" id="ppt-file" accept=".txt" />
+    </div>
+
+    <div class="checks">
+      <label><input type="checkbox" id="opt-handout" /> Include a printable handout (summary of all slides)</label>
+    </div>
+
+    <label class="field" for="ppt-title">Deck title (optional)</label>
+    <input type="text" id="ppt-title" placeholder="e.g., Civ Pro — Personal Jurisdiction" />
+
+    <label class="field" for="ppt-presenter">Your name (shown on the title slide)</label>
+    <input type="text" id="ppt-presenter" placeholder="e.g., Kayla Howsare" />
+
+    <label class="field" for="ppt-length">Deck length</label>
+    <select id="ppt-length" style="width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--ink);font-size:16px;">
+      <option value="short">Short — 5 content slides</option>
+      <option value="standard" selected>Standard — 9 content slides</option>
+      <option value="detailed">Detailed — up to 14 content slides</option>
+    </select>
+
+    <div class="checks" style="margin-top:10px;">
+      <label><input type="checkbox" id="opt-polish" checked /> Polish wording (capitalize, trim filler, add periods)</label>
+    </div>
+
+    <div style="margin-top: 14px;">
+      <button onclick="generatePPT()">Generate PowerPoint</button>
+      <button class="ghost" onclick="clearPPT()">Clear</button>
+    </div>
+    <div id="ppt-status" class="status-msg"></div>
+
+    <div id="handout-output"></div>
+  </section>
+
+  <!-- ============ TOOL 2: QUIZ ME ============ -->
+  <section class="tool" id="quiz">
+    <h2>Quiz Me</h2>
+    <p class="what">Drop in your notes and get random practice questions — one at a time. Great for retention. Choose fill-in-the-blank or multiple choice before you start.</p>
+
+    <details class="howto">
+      <summary>How to use this (click to open)</summary>
+      <ol>
+        <li>Paste your notes (or upload a .txt file).</li>
+        <li>Pick a question style: <strong>fill in the blank</strong> or <strong>multiple choice</strong>.</li>
+        <li>Click <strong>Start Quizzing</strong>. A random question appears.</li>
+        <li>Think about your answer, then click <strong>Show Answer</strong>. Click <strong>Next Question</strong> for another.</li>
+      </ol>
+    </details>
+
+    <label class="field" for="quiz-notes">Your notes</label>
+    <textarea id="quiz-notes" placeholder="Paste the same notes you want to study, or different ones. The more definition-style sentences (e.g., 'X means Y' or 'X requires Y'), the better the questions."></textarea>
+    <div class="file-row">
+      <span>Or upload a .txt file:</span>
+      <input type="file" id="quiz-file" accept=".txt" />
+    </div>
+
+    <div class="checks">
+      <label><input type="radio" name="quiz-style" value="blank" checked /> Fill in the blank</label>
+      <label><input type="radio" name="quiz-style" value="mc" /> Multiple choice</label>
+    </div>
+
+    <div>
+      <button onclick="startQuiz()">Start Quizzing</button>
+      <button class="ghost" onclick="clearQuiz()">Clear</button>
+    </div>
+    <div id="quiz-status" class="status-msg"></div>
+
+    <div class="quiz-music" id="quiz-music">
+      <div class="quiz-music-header">
+        <span class="quiz-music-title"><span class="playing-dot"></span>🎧 Focus Music (optional)</span>
+        <button class="mp-btn" id="mp-toggle" onclick="toggleMusic()" aria-label="Play focus music">▶ Play</button>
+      </div>
+      <div class="mode-options">
+        <label><input type="radio" name="music-mode" value="upbeat" checked /> Upbeat</label>
+        <label><input type="radio" name="music-mode" value="lofi" /> Lo-fi</label>
+        <label><input type="radio" name="music-mode" value="binaural" /> Binaural</label>
+      </div>
+      <div class="volume-row">
+        <span>🔈</span>
+        <input type="range" id="music-volume" min="0" max="100" value="35" />
+        <span>🔊</span>
+      </div>
+      <div class="music-note">Generated live in your browser — no lyrics, no downloads. Headphones recommended for binaural mode.</div>
+    </div>
+
+    <div class="quiz-stage" id="quiz-stage">
+      <div class="quiz-counter" id="quiz-counter">Question 1</div>
+      <div class="quiz-question" id="quiz-question"></div>
+      <ul class="quiz-choices" id="quiz-choices"></ul>
+      <div class="quiz-answer" id="quiz-answer"></div>
+      <div style="margin-top: 14px;">
+        <button class="secondary" onclick="showAnswer()" id="btn-show">Show Answer</button>
+        <button onclick="nextQuestion()" id="btn-next">Next Question</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Made with care for law students. Tip: bookmark this page (press <strong>Ctrl+D</strong> on Windows or <strong>⌘+D</strong> on Mac) so it's one click away.
+</footer>
+
+<script>
+/* ============================================================
+   SHARED — file upload handling
+============================================================ */
+function wireFileInput(fileInputId, textareaId) {
+  document.getElementById(fileInputId).addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      document.getElementById(textareaId).value = ev.target.result;
+    };
+    reader.readAsText(file);
+  });
+}
+wireFileInput('ppt-file', 'ppt-notes');
+wireFileInput('quiz-file', 'quiz-notes');
+
+/* ============================================================
+   SHARED — extract concepts from notes
+============================================================ */
+function extractFacts(notes) {
+  const sentences = notes
+    .replace(/\n+/g, ' ')
+    .split(/(?<=[.!?])\s+/)
+    .map(s => s.trim())
+    .filter(s => s.length > 12);
+
+  const facts = [];
+  const patterns = [
+    /^(.+?)\s+(?:is|are|means|refers to)\s+(.+)$/i,
+    /^(.+?)\s+requires?\s+(.+)$/i,
+    /^(.+?):\s+(.+)$/,
+    /^The (.+?) (?:doctrine|rule|test|standard) (?:is|requires|states that)\s+(.+)$/i
+  ];
+
+  for (const s of sentences) {
+    for (const re of patterns) {
+      const m = s.match(re);
+      if (m) {
+        const concept = m[1].trim().replace(/^the\s+/i, '');
+        const def = m[2].trim().replace(/[.!?]$/, '');
+        if (concept.length < 80 && def.length > 5 && def.length < 250) {
+          facts.push({ concept, def, sentence: s });
+          break;
+        }
+      }
+    }
+  }
+  return { facts, sentences };
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[c]);
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function showStatus(id, msg, type) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.className = 'status-msg show ' + type;
+}
+function hideStatus(id) {
+  document.getElementById(id).className = 'status-msg';
+}
+
+/* ============================================================
+   TOOL 1 — PPT GENERATOR
+============================================================ */
+// Backend endpoint - placeholder is replaced at deploy time; falls back to localhost for local dev.
+const PPT_API = '__PORT_8000__'.startsWith('__') ? 'http://localhost:8000' : '__PORT_8000__';
+
+async function generatePPT() {
+  hideStatus('ppt-status');
+  const notes = document.getElementById('ppt-notes').value.trim();
+  if (!notes) {
+    showStatus('ppt-status', 'Paste some notes or upload a .txt file first.', 'error');
+    return;
+  }
+
+  const title = document.getElementById('ppt-title').value.trim() || 'Study Deck';
+  const presenter = document.getElementById('ppt-presenter').value.trim();
+  const length = document.getElementById('ppt-length').value || 'standard';
+  const polish = document.getElementById('opt-polish').checked;
+  const wantHandout = document.getElementById('opt-handout').checked;
+
+  showStatus('ppt-status', 'Building your PowerPoint... this takes a few seconds.', 'info');
+
+  try {
+    const res = await fetch(PPT_API + '/api/generate-ppt', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ notes: notes, title: title, presenter: presenter, polish: polish, length: length })
+    });
+
+    if (!res.ok) {
+      let msg = 'Server error (' + res.status + ').';
+      try { const j = await res.json(); if (j && j.detail) msg = j.detail; } catch (e) {}
+      showStatus('ppt-status', msg, 'error');
+      return;
+    }
+
+    const blob = await res.blob();
+    const safeName = title.replace(/[^a-z0-9]+/gi, '-').replace(/^-+|-+$/g, '').toLowerCase() || 'study-deck';
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = safeName + '.pptx';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+
+    showStatus('ppt-status', 'Done. Your file "' + safeName + '.pptx" downloaded. Open it in PowerPoint, Google Slides, or Keynote.', 'success');
+
+    const handoutEl = document.getElementById('handout-output');
+    if (wantHandout) {
+      const parsed = extractFacts(notes);
+      const items = parsed.facts.length >= 3
+        ? parsed.facts.map(function(f){ return { title: f.concept, body: f.def }; })
+        : parsed.sentences.slice(0, 12).map(function(s, i){ return { title: 'Key Point ' + (i + 1), body: s }; });
+      let html = '<h3>Handout - ' + escapeHtml(title) + '</h3><ul>';
+      items.forEach(function(s){
+        html += '<li><strong>' + escapeHtml(s.title) + '</strong> - ' + escapeHtml(s.body) + '</li>';
+      });
+      html += '</ul>';
+      html += '<div class="output-actions">'
+        + '<button onclick="printHandout()">Print / Save as PDF</button>'
+        + '<button class="secondary" onclick="copyHandout()">Copy to clipboard</button>'
+        + '<button class="ghost" onclick="downloadHandout()">Download .txt</button>'
+        + '</div>';
+      handoutEl.innerHTML = html;
+      handoutEl.classList.add('show');
+    } else {
+      handoutEl.classList.remove('show');
+      handoutEl.innerHTML = '';
+    }
+  } catch (err) {
+    console.error(err);
+    showStatus('ppt-status', 'Could not reach the server. Try again in a moment.', 'error');
+  }
+}
+
+function clearPPT() {
+  document.getElementById('ppt-notes').value = '';
+  document.getElementById('ppt-file').value = '';
+  document.getElementById('ppt-title').value = '';
+  document.getElementById('ppt-presenter').value = '';
+  document.getElementById('ppt-length').value = 'standard';
+  document.getElementById('opt-polish').checked = true;
+  document.getElementById('opt-handout').checked = false;
+  document.getElementById('handout-output').classList.remove('show');
+  document.getElementById('handout-output').innerHTML = '';
+  hideStatus('ppt-status');
+}
+
+function printHandout() { window.print(); }
+function copyHandout() {
+  const text = document.getElementById('handout-output').innerText
+    .replace(/🖨️ Print \/ Save as PDF[\s\S]*$/, '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Copied. Paste it anywhere — Google Docs, email, etc.');
+  }).catch(() => alert('Could not copy — select the text by hand and press Ctrl+C.'));
+}
+function downloadHandout() {
+  const text = document.getElementById('handout-output').innerText
+    .replace(/🖨️ Print \/ Save as PDF[\s\S]*$/, '').trim();
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'handout.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ============================================================
+   TOOL 2 — QUIZ ME
+============================================================ */
+let quizPool = [];      // pool of facts
+let quizSeen = 0;       // count of questions shown
+let quizStyle = 'blank';
+let quizCurrent = null;
+
+function startQuiz() {
+  hideStatus('quiz-status');
+  const notes = document.getElementById('quiz-notes').value.trim();
+  if (!notes) {
+    showStatus('quiz-status', 'Paste notes or upload a .txt file first.', 'error');
+    return;
+  }
+  const { facts } = extractFacts(notes);
+  if (facts.length < 2) {
+    showStatus('quiz-status', 'Need at least 2 definition-style sentences (e.g., "X is Y" or "X requires Y") to make a quiz. Try adding more notes.', 'error');
+    return;
+  }
+
+  quizPool = [...facts];
+  quizSeen = 0;
+  quizStyle = document.querySelector('input[name="quiz-style"]:checked').value;
+  document.getElementById('quiz-stage').classList.add('show');
+  nextQuestion();
+}
+
+function nextQuestion() {
+  if (quizPool.length === 0) {
+    showStatus('quiz-status', '✓ You\'ve seen every question. Click Start Quizzing again to reshuffle.', 'success');
+    document.getElementById('quiz-stage').classList.remove('show');
+    return;
+  }
+  hideStatus('quiz-status');
+
+  // Pick a random fact and remove from pool (no repeats until pool empties)
+  const idx = Math.floor(Math.random() * quizPool.length);
+  const fact = quizPool.splice(idx, 1)[0];
+  quizSeen++;
+  quizCurrent = fact;
+
+  document.getElementById('quiz-counter').textContent = `Question ${quizSeen}`;
+  const qEl = document.getElementById('quiz-question');
+  const choicesEl = document.getElementById('quiz-choices');
+  const answerEl = document.getElementById('quiz-answer');
+  answerEl.classList.remove('show');
+  answerEl.innerHTML = '';
+  choicesEl.innerHTML = '';
+  document.getElementById('btn-show').disabled = false;
+
+  if (quizStyle === 'blank') {
+    // Fill in the blank: blank out the concept in the sentence
+    const re = new RegExp('\\b' + fact.concept.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+    let blanked;
+    if (re.test(fact.sentence)) {
+      blanked = fact.sentence.replace(re, '_______');
+    } else {
+      blanked = `_______ ${fact.sentence.slice(fact.concept.length).trim()}`;
+    }
+    qEl.textContent = blanked;
+  } else {
+    // Multiple choice
+    qEl.textContent = `Which of the following best describes "${fact.concept}"?`;
+    // Build 4 choices: correct + 3 distractors
+    // Use all original facts (from quizPool + already seen) — rebuild from a stable source
+    const allFacts = window._allQuizFacts || [];
+    const distractorPool = allFacts.filter(f => f.def !== fact.def).map(f => f.def);
+    shuffle(distractorPool);
+    const distractors = distractorPool.slice(0, 3);
+    while (distractors.length < 3) distractors.push('None of the above');
+    const choices = shuffle([fact.def, ...distractors]);
+
+    choices.forEach((c) => {
+      const li = document.createElement('li');
+      li.textContent = c;
+      li.onclick = () => {
+        // Visual feedback
+        Array.from(choicesEl.children).forEach(child => child.classList.remove('correct', 'wrong'));
+        if (c === fact.def) {
+          li.classList.add('correct');
+        } else {
+          li.classList.add('wrong');
+          // also highlight correct
+          Array.from(choicesEl.children).forEach(child => {
+            if (child.textContent === fact.def) child.classList.add('correct');
+          });
+        }
+      };
+      choicesEl.appendChild(li);
+    });
+  }
+}
+
+function showAnswer() {
+  if (!quizCurrent) return;
+  const answerEl = document.getElementById('quiz-answer');
+  answerEl.innerHTML = `<strong>Answer:</strong> ${escapeHtml(quizCurrent.concept)} — ${escapeHtml(quizCurrent.def)}`;
+  answerEl.classList.add('show');
+  // Also reveal in MC mode
+  if (quizStyle === 'mc') {
+    const choicesEl = document.getElementById('quiz-choices');
+    Array.from(choicesEl.children).forEach(child => {
+      if (child.textContent === quizCurrent.def) child.classList.add('correct');
+    });
+  }
+  document.getElementById('btn-show').disabled = true;
+}
+
+function clearQuiz() {
+  document.getElementById('quiz-notes').value = '';
+  document.getElementById('quiz-file').value = '';
+  document.getElementById('quiz-stage').classList.remove('show');
+  quizPool = []; quizSeen = 0; quizCurrent = null;
+  hideStatus('quiz-status');
+}
+
+// Override startQuiz to also stash full fact list for MC distractors
+const _origStartQuiz = startQuiz;
+startQuiz = function() {
+  const notes = document.getElementById('quiz-notes').value.trim();
+  if (notes) {
+    const { facts } = extractFacts(notes);
+    window._allQuizFacts = facts;
+  }
+  _origStartQuiz();
+};
+</script>
+
+
+<script>
+/* ============================================================
+   FOCUS MUSIC — Web Audio synth engine
+============================================================ */
+let audioCtx = null;
+let masterGain = null;
+let musicPlaying = false;
+let currentMode = 'upbeat';
+let scheduledNodes = [];
+let schedulerInterval = null;
+let nextNoteTime = 0;
+let stepIndex = 0;
+
+function toggleMusic() {
+  if (musicPlaying) {
+    stopMusic();
+  } else {
+    startMusic();
+  }
+}
+
+function startMusic() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    masterGain = audioCtx.createGain();
+    const vol = parseInt(document.getElementById('music-volume').value) / 100;
+    masterGain.gain.value = vol * 0.6;
+    masterGain.connect(audioCtx.destination);
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+
+  currentMode = document.querySelector('input[name="music-mode"]:checked').value;
+  musicPlaying = true;
+  document.getElementById('mp-toggle').textContent = '❚❚ Pause';
+  document.getElementById('quiz-music').classList.add('playing');
+
+  if (currentMode === 'binaural') {
+    playBinaural();
+  } else {
+    nextNoteTime = audioCtx.currentTime + 0.1;
+    stepIndex = 0;
+    scheduler();
+    // Wake up often so heavy work elsewhere doesn't starve playback
+    schedulerInterval = setInterval(scheduler, 60);
+  }
+}
+
+function stopMusic() {
+  musicPlaying = false;
+  document.getElementById('mp-toggle').textContent = '▶ Play';
+  document.getElementById('quiz-music').classList.remove('playing');
+  if (schedulerInterval) { clearInterval(schedulerInterval); schedulerInterval = null; }
+  const now = audioCtx ? audioCtx.currentTime : 0;
+  scheduledNodes.forEach(n => {
+    try {
+      if (n.gain) {
+        n.gain.cancelScheduledValues(now);
+        n.gain.setValueAtTime(n.gain.value, now);
+        n.gain.linearRampToValueAtTime(0, now + 0.3);
+      }
+      if (n.stop) setTimeout(() => { try { n.stop(); } catch(e){} }, 400);
+    } catch(e){}
+  });
+  scheduledNodes = [];
+}
+
+document.getElementById('music-volume').addEventListener('input', (e) => {
+  if (masterGain && audioCtx) {
+    const vol = parseInt(e.target.value) / 100;
+    masterGain.gain.setTargetAtTime(vol * 0.6, audioCtx.currentTime, 0.05);
+  }
+});
+
+document.querySelectorAll('input[name="music-mode"]').forEach(r => {
+  r.addEventListener('change', () => {
+    if (musicPlaying) { stopMusic(); setTimeout(startMusic, 450); }
+  });
+});
+
+function scheduler() {
+  if (!musicPlaying) return;
+  const bpm = currentMode === 'lofi' ? 75 : 110;
+  const stepDuration = 60 / bpm / 2;
+  // Schedule 1.5s of audio ahead — covers JS freezes during PPT generation
+  const lookahead = 1.5;
+  // If we fell badly behind (e.g. tab was inactive or main thread blocked),
+  // catch up to the current time instead of dumping a huge burst of notes.
+  if (nextNoteTime < audioCtx.currentTime - 0.1) {
+    nextNoteTime = audioCtx.currentTime + 0.05;
+  }
+  while (nextNoteTime < audioCtx.currentTime + lookahead) {
+    scheduleStep(stepIndex, nextNoteTime);
+    nextNoteTime += stepDuration;
+    stepIndex++;
+  }
+}
+
+const UPBEAT_MELODY = [
+  523.25, 0, 659.25, 0, 783.99, 0, 659.25, 0,
+  587.33, 0, 659.25, 0, 783.99, 0, 1046.50, 0
+];
+const UPBEAT_BASS = [
+  130.81, 0, 0, 0, 0, 0, 0, 0,
+  146.83, 0, 0, 0, 0, 0, 0, 0
+];
+
+const LOFI_MELODY = [
+  392.00, 0, 0, 0, 523.25, 0, 0, 0,
+  466.16, 0, 0, 0, 392.00, 0, 0, 0
+];
+const LOFI_BASS = [
+  98.00, 0, 0, 0, 0, 0, 0, 0,
+  87.31, 0, 0, 0, 0, 0, 0, 0
+];
+
+function scheduleStep(step, when) {
+  const i = step % 16;
+  if (currentMode === 'upbeat') {
+    if (UPBEAT_MELODY[i]) playNote(UPBEAT_MELODY[i], when, 0.22, 'triangle', 0.18);
+    if (UPBEAT_BASS[i]) playNote(UPBEAT_BASS[i], when, 0.5, 'sine', 0.30);
+    if (i % 8 === 0) playKick(when, 0.18);
+    if (i % 2 === 1) playHat(when, 0.05);
+  } else if (currentMode === 'lofi') {
+    if (LOFI_MELODY[i]) playNote(LOFI_MELODY[i], when, 0.6, 'sine', 0.20);
+    if (LOFI_BASS[i]) playNote(LOFI_BASS[i], when, 0.8, 'sine', 0.28);
+    if (i % 8 === 0) playKick(when, 0.12);
+  }
+}
+
+function playNote(freq, when, duration, type, vol) {
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.value = currentMode === 'lofi' ? 1200 : 2400;
+  osc.type = type;
+  osc.frequency.value = freq;
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(masterGain);
+  gain.gain.setValueAtTime(0, when);
+  gain.gain.linearRampToValueAtTime(vol, when + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.001, when + duration);
+  osc.start(when);
+  osc.stop(when + duration + 0.05);
+  scheduledNodes.push({ gain, stop: () => osc.stop() });
+}
+
+function playKick(when, vol) {
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(120, when);
+  osc.frequency.exponentialRampToValueAtTime(40, when + 0.15);
+  gain.gain.setValueAtTime(vol, when);
+  gain.gain.exponentialRampToValueAtTime(0.001, when + 0.18);
+  osc.connect(gain);
+  gain.connect(masterGain);
+  osc.start(when);
+  osc.stop(when + 0.2);
+  scheduledNodes.push({ gain, stop: () => osc.stop() });
+}
+
+function playHat(when, vol) {
+  const buffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.05, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * 0.5;
+  const src = audioCtx.createBufferSource();
+  src.buffer = buffer;
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = 'highpass';
+  filter.frequency.value = 6000;
+  const gain = audioCtx.createGain();
+  gain.gain.setValueAtTime(vol, when);
+  gain.gain.exponentialRampToValueAtTime(0.001, when + 0.04);
+  src.connect(filter);
+  filter.connect(gain);
+  gain.connect(masterGain);
+  src.start(when);
+  scheduledNodes.push({ gain, stop: () => { try { src.stop(); } catch(e){} } });
+}
+
+function playBinaural() {
+  const merger = audioCtx.createChannelMerger(2);
+  const oscL = audioCtx.createOscillator();
+  const oscR = audioCtx.createOscillator();
+  const gainL = audioCtx.createGain();
+  const gainR = audioCtx.createGain();
+  oscL.frequency.value = 200;
+  oscR.frequency.value = 210;
+  oscL.type = 'sine';
+  oscR.type = 'sine';
+  gainL.gain.setValueAtTime(0, audioCtx.currentTime);
+  gainR.gain.setValueAtTime(0, audioCtx.currentTime);
+  gainL.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime + 1.5);
+  gainR.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime + 1.5);
+  oscL.connect(gainL);
+  oscR.connect(gainR);
+  gainL.connect(merger, 0, 0);
+  gainR.connect(merger, 0, 1);
+  merger.connect(masterGain);
+  oscL.start();
+  oscR.start();
+  scheduledNodes.push({ gain: gainL, stop: () => oscL.stop() });
+  scheduledNodes.push({ gain: gainR, stop: () => oscR.stop() });
+
+  const pad = audioCtx.createOscillator();
+  const padGain = audioCtx.createGain();
+  const padFilter = audioCtx.createBiquadFilter();
+  padFilter.type = 'lowpass';
+  padFilter.frequency.value = 600;
+  pad.type = 'sine';
+  pad.frequency.value = 130.81;
+  padGain.gain.setValueAtTime(0, audioCtx.currentTime);
+  padGain.gain.linearRampToValueAtTime(0.12, audioCtx.currentTime + 2);
+  pad.connect(padFilter);
+  padFilter.connect(padGain);
+  padGain.connect(masterGain);
+  pad.start();
+  scheduledNodes.push({ gain: padGain, stop: () => pad.stop() });
+}
+
+</script>
+
+</body>
+
+</html>
